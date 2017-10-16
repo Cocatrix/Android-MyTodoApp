@@ -2,9 +2,11 @@ package com.example.jakanjr.todoapp;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -23,10 +25,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
-
+        public ImageButton mImageButton;
         public ViewHolder(View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.textView) ;
+            mImageButton = (ImageButton) itemView.findViewById(R.id.imageButton2);
         }
     }
 
@@ -38,8 +41,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.setText(mDataset.get(position).getTask().toString());
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+
+
+        holder.mTextView.setText(mDataset.get(position).getTask());
+        holder.mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDataset.remove(position);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
